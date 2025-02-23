@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">SEX GAME</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">NEXT STEP</string>
+    <string name="previous">PREVIOUS</string>
+
+
+
+
+
+    <string-array name="level_array">
+        <item>Level 1 (Light)</item>
+        <item>Level 2 (Medium)</item>
+        <item>Level 3 (Hard)</item>
+
+    </string-array>
+
+
+    <string name="give_oral">I like to give oral pleasure.</string>
+    <string name="playerchoice_desc">Please indicate all the practices you are comfortable with. If you prefer, you can fill this page privately. But don\'t be selfish! You should both have fun!</string>
+    <string name="receive_oral">I like to receive oral pleasure.</string>
+    <string name="dominant">I like to be dominant.</string>
+    <string name="submissive">I like to be submissive.</string>
+    <string name="give_anal_play">I like to play with my partner anally.</string>
+    <string name="receive_anal_play">I like to be played with anally.</string>
+    <string name="nextPlayer">NEXT PLAYER</string>
+    <string name="startGame">START GAME</string>
+    <string name="player1">Player 1</string>
+    <string name="player2">Player 2</string>
+    <string name="pickItems">Select all items you have at hand and would like to include in the game!</string>
+    <string name="pickKinks">Select all card sets to include in the game. A basic card set is always included.</string>
+    <string name="kinks">CARD SETS</string>
+    <string name="sexGame">SEX GAME</string>
+    <string name="pickLevels">Select all levels of play to include in the game!</string>
+    <string name="timer">TIME</string>
+    <string name="level">Level</string>
+    <string name="rules1">Tap the card to reveal the next sexy task or dare. Some cards have a time limit. In this case a timer will appear, tap it to start the card\'s time!</string>
+    <string name="rulesTitle">Rules</string>
+    <string name="rules2">Some cards also include a random number represented by a 🎲. In this case tap the die that appears on the screen!</string>
+    <string name="rules3">Both players play at the same time, so a card will specify who does what. Both players start with a JOKER to skip a card and a TIME WARP to double or half the time. Tap their respective logos to use! You may uncover further items during play!</string>
+    <string name="rules4">Finish the round by pressing the play button at the bottom of the screen.</string>
+    <string name="okay">Got it!</string>
+    <string name="leaveMessage">LEAVE GAME?</string>
+    <string name="leaveMessageFull">Are you sure you want to leave the current game? All progress will be lost!</string>
+    <string name="sureLeave">❌ YES, LEAVE GAME!</string>
+    <string name="stay">NO, CONTINUE PLAYING</string>
+    <string name="nextRoundSure">GO TO NEXT ROUND?</string>
+    <string name="skipRound">Are you sure you want to skip the remaining time and proceed to next round?</string>
+    <string name="stayRound">NO, STAY IN ROUND</string>
+    <string name="skipTimerText">YES, SKIP REMAINING TIME</string>
+    <string name="useJoker">USE JOKER?</string>
+    <string name="useJokerFull">Are you sure you want to use this joker?</string>
+    <string name="yesUse">YES, USE JOKER</string>
+    <string name="noDontUse">NO, DON\'T USE</string>
+    <string name="doubletime">YES, DOUBLE TIME!</string>
+    <string name="halveTime">YES, HALVE TIME!</string>
+    <string name="useTimeWarp">USE TIME WARP?</string>
+    <string name="nextRoundSureFull">Are you sure you want to proceed to next round? Timer has not been started or time is still running!</string>
+    <string name="whoGetsJoker">Who gets the joker?</string>
+    <string name="whoGetsJokerFull">Please select which player receives the joker from the challenge.</string>
+    <string name="drawNoJokers">Draw - No jokers!</string>
+    <string name="getJokerText">Joker won?</string>
+    <string name="getJokerTextFull">Please select whether you completed the challenge and should receive your joker.</string>
+    <string name="noDontGet">No, do not get.</string>
+    <string name="yesGet">Yes, claim joker!</string>
+    <string name="selectOneLevel">You have to select at least one level!</string>
+    <string name="gameFinished">Game over!</string>
+    <string name="gameFinishedFull">However, you can keep playing until there are available cards, if you want!</string>
+
+</resources>
