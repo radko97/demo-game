@@ -1,54 +1,27 @@
 package com.example.demogame
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.demogame.databinding.ActivityKinkselectionBinding
+import com.example.demogame.databinding.ActivityCardsetselectionBinding
 
 
-class KinkSelectionActivity : AppCompatActivity() {
+class CardsetSelectionActivity : AppCompatActivity() {
     //gives access to xml elements
-    private lateinit var binding: ActivityKinkselectionBinding
+    private lateinit var binding: ActivityCardsetselectionBinding
     private lateinit var newRecyclerview : RecyclerView
 
-    private lateinit var images: Array<Int>
-    private lateinit var descs: Array<String>
     private lateinit var itemList: ArrayList<Item>
-    private lateinit var tmpList: ArrayList<Item>
     private lateinit var itemAdapter: ItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //initialize the binding and set content view
-        binding = ActivityKinkselectionBinding.inflate(layoutInflater)
+        binding = ActivityCardsetselectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        images = arrayOf(
-            R.drawable.spanking,
-            R.drawable.feet,
-            R.drawable.neck,
-            R.drawable.sports,
-            R.drawable.dirty_talk,
-            R.drawable.buttplug,
-            R.drawable.breath_play,
-            R.drawable.face_slap
-            )
-
-        descs= arrayOf(
-            "A good old-fashioned spanking",
-            "Feet",
-            "The neck is an erogenous zone too!",
-            "Some sexy exercise never killed nobody!",
-            "Talk dirty to me!",
-            "Anal play",
-            "Breath play (please be careful, we don't want to get sued!)",
-            "Ouch! That's my face!",
-        )
 
         newRecyclerview = binding.recyclerViewKinks
         newRecyclerview.layoutManager = LinearLayoutManager(this)
@@ -56,8 +29,7 @@ class KinkSelectionActivity : AppCompatActivity() {
 
 
         itemList = arrayListOf<Item>()
-        tmpList = arrayListOf<Item>()
-        addItems()
+        loadCardSets()
 
         //init the item adapter and set it as the adapter for the recycler view
         itemAdapter = ItemAdapter(itemList)
@@ -75,15 +47,38 @@ class KinkSelectionActivity : AppCompatActivity() {
             for (i in itemList.indices){
                 itemSelectedArray[i] = itemList[i].activated
             }
-
-            intent.putExtra("selectedKinks", itemSelectedArray)
             startActivity(intent)
         }
     }
 
-    private fun addItems(){
+    private fun loadCardSets(){
+
+        val images = arrayOf(
+            R.drawable.sports,
+            R.drawable.heart,
+            R.drawable.handcuffs,
+            R.drawable.spanking,
+            R.drawable.feet,
+            R.drawable.buttplug,
+        )
+        val identifiers = arrayOf(
+            "sports",
+            "cute",
+            "bdsm",
+            "spanking",
+            "feet",
+            "anal_play"
+        )
+        val descs = arrayOf(
+            "The spicy workout routine for you and your partner \uD83D\uDE0F",
+            "Collection of cards containing complete cuteness overload! \uD83D\uDC96",
+            "Collection of dominant-submissive dares and more rough stuff.",
+            "Cards for some good old-fashioned spankings, slaps, and more. \uD83D\uDC4B",
+            "Cards for those who are toe-tally in love with feet! \uD83E\uDDB6",
+            "Collection with extra cards for backdoor fun.",
+        )
         for(i in images.indices){
-            val item = Item(images[i],descs[i])
+            val item = Item(images[i],descs[i], identifiers[i])
             itemList.add(item)
         }
     }
@@ -93,11 +88,8 @@ class KinkSelectionActivity : AppCompatActivity() {
         newRecyclerview.layoutManager = LinearLayoutManager(this)
 
         itemAdapter.onItemClick = { item ->
-
             // Toggle if item is activated
             item.activated = !item.activated
-
-
         }
     }
 

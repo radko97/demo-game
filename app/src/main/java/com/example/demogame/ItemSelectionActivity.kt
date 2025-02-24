@@ -1,14 +1,11 @@
 package com.example.demogame
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demogame.databinding.ActivityItemselectionBinding
-import com.example.demogame.databinding.ActivityPlayerchoiceBinding
 
 class ItemSelectionActivity : AppCompatActivity() {
     //gives access to xml elements
@@ -43,12 +40,12 @@ class ItemSelectionActivity : AppCompatActivity() {
 
         binding.button.setOnClickListener {
 
-            goToKinkSelection()
+            goToCardSetSelection()
         }
     }
 
-    private fun goToKinkSelection() {
-        val intent = Intent(this, KinkSelectionActivity::class.java)
+    private fun goToCardSetSelection() {
+        val intent = Intent(this, CardsetSelectionActivity::class.java)
 
         // Restructure the items for use by DB
         val activatedItems = ArrayList<String>()

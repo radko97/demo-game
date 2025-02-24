@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.demogame.databinding.ActivityMainBinding
 
 
+private const val s =
+    "Level 0 - Includes non-sexual dares and some kissing and touching, but clothes stay on!"
+
 class MainActivity : AppCompatActivity() {
 
     // Gives access to xml elements
@@ -46,10 +49,10 @@ class MainActivity : AppCompatActivity() {
             R.drawable.l3,
         )
         descs = arrayOf(
-            "Level 0 - Non-sexual or only slightly suggestive dares, clothes stay on!",
-            "Level 1 - Includes kissing, touching and undressing!",
-            "Level 2 - Includes all kinds of foreplay, petting and crazy games!",
-            "Level 3 - Includes sex, orgasms and more wild stuff!"
+            getString(R.string.level0desc),
+            getString(R.string.level1desc),
+            getString(R.string.level2desc),
+            getString(R.string.level3desc)
         )
 
         newRecyclerview = binding.recyclerViewLevels
@@ -103,8 +106,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, getString(R.string.selectOneLevel), Toast.LENGTH_LONG).show()
             return
         }
-
-
 
         val intent = Intent(this, PlayerChoiceActivity::class.java)
         val player1name: String = binding.player1Text.text.toString()

@@ -1,5 +1,6 @@
 package com.example.demogame
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 
 class PopUpFragmentRules : DialogFragment() {
 
@@ -25,9 +27,13 @@ class PopUpFragmentRules : DialogFragment() {
         val button = view.findViewById<Button>(R.id.buttonRules)
 
         button.setOnClickListener {
-            //Toast.makeText(context, "This is a button!", Toast.LENGTH_LONG).show()
             dismiss()
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        setFragmentResult("popupClosed", Bundle())  // Notify when dismissed in any way
     }
 
 }

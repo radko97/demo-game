@@ -113,7 +113,6 @@
         android:ems="10"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:inputType="textMultiLine"
         android:text="@string/playerchoice_desc"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

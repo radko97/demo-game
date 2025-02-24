@@ -88,12 +88,13 @@ class GameActivity: AppCompatActivity(){
         setVisibilityForLevelViews()
 
         // Add cards based on levels
-        if (levelList.contains(0)) cardManager.addCardsFromTsv("/res/raw/cardslevel0.tsv")
-        // if (levelList.contains(1)) cardManager.addCardsFromTsv("/res/raw/cardslevel1.tsv")
-        //if (levelList.contains(2)) cardManager.addCardsFromTsv("/res/raw/cardslevel2.tsv")
-        //if (levelList.contains(3)) cardManager.addCardsFromTsv("/res/raw/cardslevel3.tsv")
+        //TODO fix level1 + cards
+        //if (levelList.contains(0)) cardManager.addCardsFromTsv("/res/raw/cardslevel0.csv")
+        //if (levelList.contains(1)) cardManager.addCardsFromTsv("/res/raw/cardslevel1.csv")
+        //if (levelList.contains(2)) cardManager.addCardsFromTsv("/res/raw/cardslevel2.csv")
+        //if (levelList.contains(3)) cardManager.addCardsFromTsv("/res/raw/cardslevel3.csv")
 
-        //cardManager.addCardsFromTsv("/res/raw/cardstest.tsv")
+        cardManager.addCardsFromCsv("/res/raw/cardstest.csv")
 
         // TODO: Add warning if not enough cards
 
@@ -169,7 +170,7 @@ class GameActivity: AppCompatActivity(){
         buttonStay.setOnClickListener {
             builder.dismiss()
             //resume time
-            resumeStopwatch()
+            if (timerRunning) resumeStopwatch()
         }
 
         builder.show()
@@ -179,9 +180,15 @@ class GameActivity: AppCompatActivity(){
 
     //open rule book popup
     fun openRules(view: View){
-        Log.d("Rules", "Many")
+        if (timerRunning) pauseStopwatch()
         val showPopUp = PopUpFragmentRules()
         showPopUp.show(supportFragmentManager,"showPopUp")
+
+        // Listen for when the popup closes
+        supportFragmentManager.setFragmentResultListener("popupClosed", this) { _, _ ->
+            resumeStopwatch()  // Call your function
+        }
+
     }
 
     // Open the next card
@@ -210,11 +217,11 @@ class GameActivity: AppCompatActivity(){
         //check popup if timer>0 -> time still running or not over
         if (time > 0){
             val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog).create()
-            val view =layoutInflater.inflate(R.layout.popup_skiptimer,null)
-            builder.setView(view)
+            val popupView =layoutInflater.inflate(R.layout.popup_skiptimer,null)
+            builder.setView(popupView)
             //builder.setCanceledOnTouchOutside(false)
-            val buttonLeave = view.findViewById<Button>(R.id.buttonYesNextRound)
-            val buttonStay = view.findViewById<Button>(R.id.buttonStayInRound)
+            val buttonLeave = popupView.findViewById<Button>(R.id.buttonYesNextRound)
+            val buttonStay = popupView.findViewById<Button>(R.id.buttonStayInRound)
             buttonLeave.setOnClickListener {
                 builder.dismiss()
                 actuallyFinishRound()

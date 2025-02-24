@@ -7,7 +7,7 @@ data class Card(
     val time: Int,
     val level: Int,
     val item: String?,
-    val kink: String?,
+    val cardSet: String?,
     val actNeedsDick: Boolean,
     val actNeedsPussy: Boolean,
     val pasNeedsDick: Boolean,

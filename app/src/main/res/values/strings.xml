@@ -65,10 +65,17 @@
     <string name="drawNoJokers">Draw - No jokers!</string>
     <string name="getJokerText">Joker won?</string>
     <string name="getJokerTextFull">Please select whether you completed the challenge and should receive your joker.</string>
-    <string name="noDontGet">No, do not get.</string>
+    <string name="noDontGet">No, do not get joker.</string>
     <string name="yesGet">Yes, claim joker!</string>
     <string name="selectOneLevel">You have to select at least one level!</string>
     <string name="gameFinished">Game over!</string>
     <string name="gameFinishedFull">However, you can keep playing until there are available cards, if you want!</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="level0desc">Level 0 - Includes some kissing and touching, but clothes stay on!</string>
+    <string name="level1desc">Level 1 - Includes more intense kissing, touching and undressing!</string>
+    <string name="level2desc">Level 2 - Includes all kinds of foreplay, petting and crazy games!</string>
+    <string name="level3desc">Level 3 - Includes sex, orgasms and more wild stuff!</string>
+
 
 </resources>
