@@ -76,6 +76,7 @@
     <string name="level1desc">Level 1 - Includes more intense kissing, touching and undressing!</string>
     <string name="level2desc">Level 2 - Includes all kinds of foreplay, petting and crazy games!</string>
     <string name="level3desc">Level 3 - Includes sex, orgasms and more wild stuff!</string>
-
-
+    <string name="loadFailed">Problem loading cards</string>
+    <string name="loadFailedFull">Please check your internet connection and try again.</string>
+    <string name="retry">Retry!</string>
 </resources>

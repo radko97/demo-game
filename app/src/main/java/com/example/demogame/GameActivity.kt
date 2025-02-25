@@ -10,7 +10,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
 import com.example.demogame.databinding.ActivityGameBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Timer
 import kotlin.concurrent.timerTask
 import kotlin.random.Random
@@ -36,6 +40,8 @@ class GameActivity: AppCompatActivity(){
     private lateinit var gameDB: TinyDB
     private lateinit var mediaplayer: MediaPlayer
     private lateinit var stopwatch: StopWatch
+
+    private var cardsLoaded = false
 
     //TODO: GAME PARAMETERS -> MOVE LATER
 
@@ -65,13 +71,29 @@ class GameActivity: AppCompatActivity(){
         }
     }
 
+    private fun showFailedLoadPopup(){
+        val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog).create()
+        val view =layoutInflater.inflate(R.layout.popup_couldntcloadcards,null)
+        builder.setView(view)
+        builder.setCanceledOnTouchOutside(false)
+        val buttonRetry = view.findViewById<Button>(R.id.buttonRetry)
+        buttonRetry.setOnClickListener {
+            loadCardsFromServer()
+            builder.dismiss()
+        }
+        builder.show()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         // Initialize TinyDB and CardManager
         gameDB = TinyDB(applicationContext)
         cardManager = gameDB.getObject("manager", CardManager::class.java) as CardManager
+        levelList = ArrayList(gameDB.getListInt("levels").sorted())
+
+        // Load the cards in the background thread
+        loadCardsFromServer()
 
         // Initialize binding
         binding = ActivityGameBinding.inflate(layoutInflater)
@@ -82,32 +104,8 @@ class GameActivity: AppCompatActivity(){
         binding.player2Textgame!!.text = cardManager.player2name
 
         // Initialize level list
-        levelList = ArrayList(gameDB.getListInt("levels").sorted())
         currentLevel = levelList[0]
-
         setVisibilityForLevelViews()
-
-        // Add cards based on levels
-        //TODO fix level1 + cards
-        //if (levelList.contains(0)) cardManager.addCardsFromTsv("/res/raw/cardslevel0.csv")
-        //if (levelList.contains(1)) cardManager.addCardsFromTsv("/res/raw/cardslevel1.csv")
-        //if (levelList.contains(2)) cardManager.addCardsFromTsv("/res/raw/cardslevel2.csv")
-        //if (levelList.contains(3)) cardManager.addCardsFromTsv("/res/raw/cardslevel3.csv")
-
-        cardManager.addCardsFromCsv("/res/raw/cardstest.csv")
-
-        // TODO: Add warning if not enough cards
-
-        //dom, sub, giveOral, receiveOral, giveAnal, receiveAnal
-        cardManager.printCards()
-        Log.d("number of cards", cardManager.getNumberOfCards().toString())
-        Log.d("items", cardManager.itemList.toString())
-
-        // Initialize current card
-        cardOpen = false
-        currentCard = cardManager.pullCard(currentLevel)
-        time = currentCard.time
-        binding.cardTextView!!.text = currentCard.text
 
         // Set initial visibility for various views
         binding.stopWatch!!.visibility = View.GONE
@@ -129,7 +127,6 @@ class GameActivity: AppCompatActivity(){
                 addJoker(i)
             }
         }
-
         // Set click listeners for jokers
         binding.joker1View!!.setOnClickListener { useJoker(0) }
         binding.jokers1textView!!.setOnClickListener { useJoker(0) }
@@ -139,6 +136,32 @@ class GameActivity: AppCompatActivity(){
         binding.jokers2textView!!.setOnClickListener { useJoker(2) }
         binding.timeWarp2!!.setOnClickListener { useJoker(3) }
         binding.timeWarpsTextView2!!.setOnClickListener { useJoker(3) }
+    }
+
+    private fun loadCardsFromServer() {
+        lifecycleScope.launch {
+            val success = withContext(Dispatchers.IO) {
+                cardManager.loadCards(levelList)
+            }
+
+            if (success) {
+                // Update the UI with the loaded cards (e.g., populate a RecyclerView)
+                Log.d("TAG", "Succesfully loaded cards")
+                startGame()
+            } else {
+                showFailedLoadPopup()
+                Log.d("TAG", "Could not load cards")
+            }
+        }
+    }
+
+    private fun startGame() {
+        cardsLoaded = true
+        // Initialize values with first card
+        cardOpen = false
+        currentCard = cardManager.pullCard(currentLevel)
+        time = currentCard.time
+        binding.cardTextView!!.text = currentCard.text
     }
 
     private fun setVisibilityForLevelViews() {
@@ -188,11 +211,20 @@ class GameActivity: AppCompatActivity(){
         supportFragmentManager.setFragmentResultListener("popupClosed", this) { _, _ ->
             resumeStopwatch()  // Call your function
         }
-
     }
 
     // Open the next card
     fun turnCard(view: View){
+
+        if (!cardsLoaded){
+            Toast.makeText(this, "Loading cards... please hold on!",Toast.LENGTH_LONG).show()
+            Timer().schedule(timerTask {
+                if (cardsLoaded) runOnUiThread { turnCard(view) } // If the cards get loaded after delay, actually turn the card
+            },
+                2000)
+            return
+        }
+
         if (!cardOpen){
             cardOpen = true
             if (time>0){
@@ -203,8 +235,9 @@ class GameActivity: AppCompatActivity(){
         if (currentCard.rng > 0){
             showDice()
         }
-
     }
+
+
 
     fun finishRound(view: View){
 
